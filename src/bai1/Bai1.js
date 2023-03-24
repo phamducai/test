@@ -5,8 +5,21 @@ import allData from "../data/data.json";
 import { useFormik } from "formik";
 
 export default function Home() {
-  const [dataTinhThanh, setDataTinhThanh] = useState(null);
+  const dataArrayQuanHuyen = Object.values(quanHuyen);
 
+  const dataArrayTinhThanh = Object.values(tinh_tp);
+
+  const data1 = allData.map((item1) => {
+    const item2 = dataArrayTinhThanh.find((item2) => item2.code === item1.city);
+    return { ...item1, ...item2 };
+  });
+  const data2 = data1.map((item1) => {
+    const item2 = dataArrayQuanHuyen.find(
+      (item2) => item2.code === item1.district
+    );
+    return { ...item1, ...item2 };
+  });
+  const [dataTinhThanh, setDataTinhThanh] = useState(null);
   const dataSpace = [
     { key: "0- 20", value: "Dưới 20m2" },
     { key: "20-30", value: "20 - 30 m2" },
@@ -16,7 +29,7 @@ export default function Home() {
     { key: "60-70", value: "60 - 70 m2" },
   ];
 
-  let [dataFilter, setDataFilter] = useState(allData);
+  let [dataFilter, setDataFilter] = useState(data2);
 
   const dataPrice = [
     { key: "0-1000000", value: "Dưới 1 triệu" },
@@ -37,9 +50,7 @@ export default function Home() {
       dienTich: "",
     },
     onSubmit: (value) => {
-      console.log(value.tinhThanh, value.quanHuyen);
-
-      const databByDing = allData.filter(
+      const databByDing = data2.filter(
         (item) =>
           item.city === value.tinhThanh &&
           item.district === value.quanHuyen &&
@@ -48,7 +59,7 @@ export default function Home() {
           +item.area > +value.dienTich.split("-")[0] &&
           +item.area <= +value.dienTich.split("-")[1]
       );
-      console.log(databByDing);
+
       setDataFilter(databByDing);
     },
   });
@@ -74,7 +85,7 @@ export default function Home() {
   const handleChangeDienTich = (event) => {
     formik.setFieldValue("dienTich", event.target.value);
   };
-
+  console.log(dataFilter);
   return (
     <div className="home container w-11/12 mx-auto">
       <form
@@ -173,13 +184,17 @@ export default function Home() {
                   {" "}
                   <p className="text-green-800">{item.price} triệu/tháng</p>
                 </div>
-                <p>
+                <div className="flex">
                   {" "}
-                  <p className="">
+                  <p className="mr-2">
                     {" "}
                     diện tích : <span className=" text-xl">{item.area}</span>
                   </p>
-                </p>
+                  <p>
+                    Địa chỉ :
+                    <span className=" text-xl">{item.path_with_type}</span>
+                  </p>
+                </div>
                 <p className="card-text">{item.content}</p>
               </div>
             </div>
