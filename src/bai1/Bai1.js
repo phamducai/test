@@ -8,19 +8,15 @@ export default function Home() {
   const [dataTinhThanh, setDataTinhThanh] = useState(null);
 
   const dataSpace = [
-    { key: "0, 20", value: "Dưới 20m2" },
-    { key: "20, 30", value: "20 - 30 m2" },
-    { key: "30, 40", value: "30 - 40 m2" },
-    { key: "40, 50", value: "40 - 50 m2" },
-    { key: "50, 60", value: "50 - 60 m2" },
-    { key: "60, 70", value: "60 - 70 m2" },
+    { key: "0- 20", value: "Dưới 20m2" },
+    { key: "20-30", value: "20 - 30 m2" },
+    { key: "30-40", value: "30 - 40 m2" },
+    { key: "40-50", value: "40 - 50 m2" },
+    { key: "50-60", value: "50 - 60 m2" },
+    { key: "60-70", value: "60 - 70 m2" },
   ];
 
-  let [dataFilter, setDataFilter] = useState(null);
-
-  if (dataFilter === null) {
-    setDataFilter(allData);
-  }
+  let [dataFilter, setDataFilter] = useState(allData);
 
   const dataPrice = [
     { key: "0-1000000", value: "Dưới 1 triệu" },
@@ -41,19 +37,18 @@ export default function Home() {
       dienTich: "",
     },
     onSubmit: (value) => {
-      console.log(value);
-      // {tinhThanh: '10', khoangGia: '10000000', quanHuyen: '100', dienTich: '20'}
+      console.log(+value.dienTich.split("-")[1], +value.dienTich.split("-")[0]);
 
       const databByDing = allData.filter(
         (item) =>
           item.city === "79" &&
-          item.district === "778" &&
+          item.district === "765" &&
           item.price > +value.khoangGia.split("-")[0] &&
-          item.price < +value.khoangGia.split("-")[1] &&
-          item.area > +value.dienTich.split("-")[0] &&
-          item.area < +value.dienTich.split("-")[1]
+          item.price <= +value.khoangGia.split("-")[1] &&
+          +item.area > +value.dienTich.split("-")[0] &&
+          +item.area <= +value.dienTich.split("-")[1]
       );
-
+      console.log(databByDing);
       setDataFilter(databByDing);
     },
   });
@@ -64,7 +59,7 @@ export default function Home() {
     const filteredDistricts = Object.keys(quanHuyen)
       .filter((key) => quanHuyen[key].parent_code === event.target.value)
       .map((key) => quanHuyen[key]);
-
+    console.log(filteredDistricts);
     setDataTinhThanh(filteredDistricts);
   };
 
@@ -113,10 +108,10 @@ export default function Home() {
           >
             <option value=" ">Chọn quận huyện</option>
             {dataTinhThanh &&
-              Object.keys(quanHuyen).map((key, index) => {
+              dataTinhThanh?.map((key, index) => {
                 return (
-                  <option key={index} value={quanHuyen[key].code}>
-                    {quanHuyen[key].name}
+                  <option key={index} value={key.code}>
+                    {key.name}
                   </option>
                 );
               })}
