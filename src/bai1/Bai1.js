@@ -37,12 +37,12 @@ export default function Home() {
       dienTich: "",
     },
     onSubmit: (value) => {
-      console.log(+value.dienTich.split("-")[1], +value.dienTich.split("-")[0]);
+      console.log(value.tinhThanh, value.quanHuyen);
 
       const databByDing = allData.filter(
         (item) =>
-          item.city === "79" &&
-          item.district === "765" &&
+          item.city === value.tinhThanh &&
+          item.district === value.quanHuyen &&
           item.price > +value.khoangGia.split("-")[0] &&
           item.price <= +value.khoangGia.split("-")[1] &&
           +item.area > +value.dienTich.split("-")[0] &&
