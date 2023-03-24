@@ -76,7 +76,7 @@ export default function Home() {
   };
 
   return (
-    <div className="home">
+    <div className="home container w-11/12 mx-auto">
       <form
         className=" flex justify-start content-center bg-yellow-300  "
         style={{ padding: "20px" }}
@@ -151,30 +151,41 @@ export default function Home() {
           Lọc tin
         </button>
       </form>
-      {dataFilter?.map((item) => {
-        return (
-          <div
-            className="card flex justify-between content-center"
-            style={{ width: "50rem", padding: "20px" }}
-          >
-            <img
-              src={item.thumbnail}
-              className="card-img-top"
-              alt="..."
-              width={100}
-            />
-            <div className="card-body">
-              <h5 className="card-title">{item.title}</h5>
-              <div className="flex">
-                {" "}
-                <p>{item.price}</p>
-                <p>{item.area}</p>
+      <div className="w-2/5 mx-auto">
+        {" "}
+        {dataFilter?.map((item) => {
+          return (
+            <div
+              className="card flex justify-between content-center"
+              style={{ width: "50rem", padding: "20px" }}
+            >
+              <img
+                src={item.thumbnail}
+                className="card-img-top"
+                alt="..."
+                width={100}
+              />
+              <div className="card-body">
+                <h5 className="card-title text-red-700 text-xl">
+                  {item.title}
+                </h5>
+                <div className="">
+                  {" "}
+                  <p className="text-green-800">{item.price} triệu/tháng</p>
+                </div>
+                <p>
+                  {" "}
+                  <p className="">
+                    {" "}
+                    diện tích : <span className=" text-xl">{item.area}</span>
+                  </p>
+                </p>
+                <p className="card-text">{item.content}</p>
               </div>
-              <p className="card-text">{item.content}</p>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
