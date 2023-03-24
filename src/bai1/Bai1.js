@@ -59,7 +59,6 @@ export default function Home() {
           +item.area > +value.dienTich.split("-")[0] &&
           +item.area <= +value.dienTich.split("-")[1]
       );
-
       setDataFilter(databByDing);
     },
   });
@@ -85,7 +84,7 @@ export default function Home() {
   const handleChangeDienTich = (event) => {
     formik.setFieldValue("dienTich", event.target.value);
   };
-  console.log(dataFilter);
+
   return (
     <div className="home container w-11/12 mx-auto">
       <form

@@ -1,0 +1,22 @@
+.chart {
+  width: 800px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.candle {
+  stroke: none;
+}
+
+.high,
+.low {
+  stroke-width: 1;
+}
+
+.up {
+  fill: green;
+}
+
+.down {
+  fill: red;
+}
